@@ -24,7 +24,7 @@ const SignInPage = () => {
             <p>
               First time using Twitter?{" "}
               <span className="cursor-pointer hover:underline">
-                <Link href="/signup">Create an account</Link>
+                <Link href="/register">Create an account</Link>
               </span>
             </p>
           </div>

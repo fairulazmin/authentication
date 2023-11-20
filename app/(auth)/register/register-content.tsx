@@ -13,32 +13,18 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { registerFormSchema } from "@/lib/register-form-schema";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const formSchema = z.object({
-  email: z.string().email().min(8, {
-    message: "Email must be at least 8 characters",
-  }),
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters",
-  }),
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters",
-  }),
-});
-
-export const SignupContent = () => {
+export const RegisterContent = () => {
   const [loading, setLoading] = useState(false);
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof registerFormSchema>>({
+    resolver: zodResolver(registerFormSchema),
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof registerFormSchema>) => {
     try {
       setLoading(true);
       // TODO ADD REGISTER
@@ -46,11 +32,10 @@ export const SignupContent = () => {
       toast.success("User registered");
     } catch (error) {
       toast.error("Unable to register user");
-      console.log(error);
+      console.log("REGISTER: ", error);
     } finally {
       setLoading(false);
     }
-    console.log(values);
   };
 
   return (

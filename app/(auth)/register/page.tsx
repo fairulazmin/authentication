@@ -1,15 +1,22 @@
 import Link from "next/link";
-import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { SignupContent } from "./signup-content";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { RegisterContent } from "./register-content";
 
-const SignUpPage = () => {
+const RegisterPage = () => {
   return (
     <div className="flex h-full items-center justify-center">
       <Card className="flex-grow max-w-lg">
         <CardHeader>
           <CardTitle>Create an account</CardTitle>
+          <CardDescription>Enter your details to register</CardDescription>
         </CardHeader>
-        <SignupContent />
+        <RegisterContent />
         <CardFooter>
           <div className="w-full text-sm text-neutral-400 text-center mt-4">
             <p>
@@ -25,4 +32,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default RegisterPage;
