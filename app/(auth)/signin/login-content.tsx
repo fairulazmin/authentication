@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { redirect } from "next/dist/server/api-utils";
 
 const formSchema = z.object({
   email: z.string().email().min(8, {
@@ -39,8 +40,20 @@ export const LoginContent = () => {
     try {
       setLoading(true);
       const { email, password } = values;
-      await signIn("credentials", { email, password });
-      toast.success("Welcome");
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+        callbackUrl: "/", //not function
+      });
+
+      if (res?.error) {
+        toast.error(res.error);
+      }
+
+      if (res?.url) {
+        toast.success("Welcome");
+      }
     } catch (error) {
       toast.error("Unable to login");
       console.log(error);

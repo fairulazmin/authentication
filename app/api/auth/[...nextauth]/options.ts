@@ -19,6 +19,7 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        // credentials consist of csrfToken, email and password
         if (!credentials?.email || !credentials?.password)
           throw new Error("Invalid credentials");
 
@@ -32,12 +33,18 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid credentials");
 
         const isCorrectPassword = await bcrypt.compare(
-          user.hashedPassword,
           credentials.password,
+          user.hashedPassword,
         );
 
-        if (!isCorrectPassword) throw new Error("Invalid credentials");
+        console.log("ISCORRECTPASSWORD: ", isCorrectPassword);
 
+        if (!isCorrectPassword) {
+          console.log("INCORRECT PASSWORD");
+          throw new Error("Invalid credentials");
+        }
+
+        console.log("USER: ", user);
         return user;
       },
     }),
