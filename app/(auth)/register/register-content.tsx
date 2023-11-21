@@ -17,9 +17,11 @@ import { registerFormSchema } from "@/lib/register-form-schema";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export const RegisterContent = () => {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
   });
@@ -29,6 +31,7 @@ export const RegisterContent = () => {
       setLoading(true);
       // TODO ADD REGISTER
       await axios.post("/api/register", values);
+      router.push("/");
       toast.success("User registered");
     } catch (error) {
       toast.error("Unable to register user");

@@ -29,7 +29,7 @@ export const Navbar = async () => {
             <div className="rounded-full p-1 hover:cursor-pointer">
               {(session?.user?.image || session?.user?.name) && (
                 <Avatar>
-                  <AvatarImage src={session.user.image} />
+                  <AvatarImage src={session.user.image!} />
                   <AvatarFallback>
                     {session.user.name.match(/\b[A-Z]/g).join("")}
                   </AvatarFallback>

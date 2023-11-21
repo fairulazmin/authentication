@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email().min(8, {
@@ -30,6 +30,7 @@ const formSchema = z.object({
 
 export const LoginContent = () => {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const { data: session } = useSession();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,7 +45,7 @@ export const LoginContent = () => {
         redirect: false,
         email,
         password,
-        callbackUrl: "/", //not function
+        callbackUrl: "/", //not function when set redirect to false
       });
 
       if (res?.error) {
@@ -53,6 +54,8 @@ export const LoginContent = () => {
 
       if (res?.url) {
         toast.success("Welcome");
+        router.push("/");
+        router.refresh();
       }
     } catch (error) {
       toast.error("Unable to login");
